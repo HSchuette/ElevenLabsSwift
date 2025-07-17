@@ -1088,6 +1088,11 @@ public class ElevenLabsSDK {
                 return
             }
 
+            if data.count > Constants.maxWebSocketMessageSize {
+                print("Warning: WebSocket message is oversized (\(data.count) bytes). Will not send!")
+                print(data)
+            }
+
             connection.socket.send(.string(string)) { [weak self] error in
                 if let error = error {
                     self?.logger.error("Failed to send WebSocket message: \(error.localizedDescription)")
