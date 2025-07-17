@@ -1110,6 +1110,8 @@ public class ElevenLabsSDK {
                     let frameLength = Int(buffer.frameLength)
                     let totalBytes = frameLength * MemoryLayout<Int16>.size
 
+                    print("setupAudioProcessing bytes: ", totalBytes) 
+
                     // If buffer is small enough, send in one chunk
                     if totalBytes <= Constants.safeMessageSize {
                         let data = Data(bytes: int16ChannelData[0], count: totalBytes)
@@ -1129,6 +1131,9 @@ public class ElevenLabsSDK {
                             let base64String = chunkData.base64EncodedString()
 
                             let message: [String: Any] = ["type": "user_audio_chunk", "user_audio_chunk": base64String]
+
+                            print("setupAudioProcessing bytes: ", bytesInChunk)
+                            
                             self.sendWebSocketMessage(message)
 
                             frameOffset += framesInChunk
